@@ -1,0 +1,622 @@
+
+
+Student Name: R KALYAN NAGA PRABHAS
+ Roll Number: 26001007 
+Branch / Section: CSM / 3 
+Course: Python Programming
+Institute: Dr. RVR NRI Institute of Technology
+
+Submitted as part of the Python Programming Activity-Based Learning assignment
+
+
+
+Question 23: Student Timetable Conflict Detection
+
+
+Problem Statement
+Compare course schedules represented by strings and tuples, detect overlapping periods, identify unavailable rooms, and validate a proposed timetable.
+
+Objectives
+- Represent class schedules using tuples.
+- Detect time overlaps between classes.
+- Flag room clashes and report whether the timetable is valid.
+
+Assumptions
+- Times are integers representing hours on a 24-hour clock.
+- Each schedule is (course, day, start_hour, end_hour, room).
+- Two classes conflict when they occur on the same day and their time intervals overlap; room conflicts occur only when the room is the same.
+
+Algorithm
+1. Start with a list of schedule tuples.
+2. Compare each pair of schedules using nested loops.
+3. If days match and one class starts before the other ends, check for overlap.
+4. Report a conflict when overlapping classes use the same room; also report student timetable overlaps.
+5. If no conflicts are found, report a valid timetable.
+
+Flowchart
+START -> Prepare input data -> Process using loops/conditions -> Check rules and calculate -> Display results -> END
+
+Pseudocode
+INPUT schedule tuples
+conflict_found = False
+FOR each pair (i, j), where j > i
+    IF day[i] == day[j] AND start[i] < end[j] AND start[j] < end[i]
+        PRINT overlapping courses
+        IF room[i] == room[j]: PRINT room conflict
+        conflict_found = True
+IF not conflict_found: PRINT timetable valid
+
+Python Source Code
+# Question 23: Student Timetable Conflict Detection
+# Tuple format: (course, day, start_hour, end_hour, room)
+schedule = [
+    ("Python", "Mon", 9, 10, "R1"),
+    ("Maths", "Mon", 9, 11, "R2"),
+    ("Physics", "Mon", 11, 12, "R1"),
+    ("English", "Tue", 10, 11, "R1")
+]
+conflict_found = False
+for i in range(len(schedule)):
+    course1, day1, start1, end1, room1 = schedule[i]
+    for j in range(i + 1, len(schedule)):
+        course2, day2, start2, end2, room2 = schedule[j]
+        overlap = (day1 == day2 and start1 < end2 and start2 < end1)
+        if overlap:
+            print(course1, "and", course2, "overlap on", day1)
+            conflict_found = True
+            if room1 == room2:
+                print("Room conflict:", room1)
+if not conflict_found:
+    print("Timetable is valid.")
+
+
+
+Question 28: Repeated Transaction Detection
+
+
+Problem Statement
+Process transaction identifiers and amounts in a list, detect duplicate transactions, identify threshold violations, and generate a list of suspicious entries.
+
+Objectives
+- Find repeated transaction identifiers.
+- Flag transactions above a specified amount.
+- Create a concise suspicious-transaction report.
+
+Assumptions
+- Each transaction is a tuple (transaction_id, amount).
+- An identifier is considered repeated if it appears more than once.
+- The suspicious amount threshold is set to 5000.
+
+Algorithm
+1. Store transactions in a list of tuples.
+2. For each transaction, count matching identifiers in the list.
+3. Flag a transaction if its identifier is repeated or its amount exceeds the threshold.
+4. Print each suspicious record once.
+
+Flowchart
+START -> Prepare input data -> Process using loops/conditions -> Check rules and calculate -> Display results -> END
+
+Pseudocode
+INPUT transactions
+suspicious = empty list
+FOR each transaction
+    count how many records have the same ID
+    IF count > 1 OR amount > threshold
+        IF transaction not already in suspicious: add it
+PRINT suspicious records
+
+Python Source Code
+# Question 28: Repeated Transaction Detection
+transactions = [
+    ("T101", 1200),
+    ("T102", 6500),
+    ("T103", 800),
+    ("T101", 1200),
+    ("T104", 7200)
+]
+threshold = 5000
+suspicious = []
+for transaction in transactions:
+    transaction_id, amount = transaction
+    count = 0
+    for item in transactions:
+        if item[0] == transaction_id:
+            count += 1
+    if (count > 1 or amount > threshold) and transaction not in suspicious:
+        suspicious.append(transaction)
+print("Suspicious transactions:")
+for transaction_id, amount in suspicious:
+    print(transaction_id, "- Rs.", amount)
+
+
+
+Question 35: Text Compression Using Character Runs
+
+
+Problem Statement
+Encode a string by grouping consecutive repeated characters and compare original and encoded lengths, including cases where encoding is not beneficial.
+
+Objectives
+- Count consecutive repeated characters.
+- Create a run-length encoded string.
+- Use the encoded form only when it is shorter.
+
+Assumptions
+- Input contains ordinary characters without spaces for this demonstration.
+- Each group is represented by the character followed by its count.
+- If the encoded string is not shorter, the original string is retained.
+
+Algorithm
+1. Read a string.
+2. Track the current character and its run count.
+3. When the character changes, append the previous character and count.
+4. Append the final run.
+5. Compare encoded and original lengths and print the shorter representation.
+
+Flowchart
+START -> Prepare input data -> Process using loops/conditions -> Check rules and calculate -> Display results -> END
+
+Pseudocode
+INPUT text
+encoded = empty string
+count = 1
+FOR i from 1 to length(text)-1
+    IF text[i] == text[i-1]: count = count + 1
+    ELSE append text[i-1] and count; count = 1
+IF text is not empty: append last character and count
+IF length(encoded) < length(text): PRINT encoded
+ELSE PRINT original text
+
+Python Source Code
+# Question 35: Text Compression Using Character Runs
+text = "aaabbccccd"
+encoded = ""
+if text != "":
+    count = 1
+    for i in range(1, len(text)):
+        if text[i] == text[i - 1]:
+            count += 1
+        else:
+            encoded += text[i - 1] + str(count)
+            count = 1
+    encoded += text[-1] + str(count)
+print("Original:", text)
+print("Encoded:", encoded)
+print("Original length:", len(text))
+print("Encoded length:", len(encoded))
+if len(encoded) < len(text):
+    print("Use encoded text:", encoded)
+else:
+    print("Compression is not beneficial; keep original.")
+
+
+
+Question 42: Student Marks Matrix Analysis
+
+
+Problem Statement
+Analyse a matrix of student marks across subjects, calculate row-wise and column-wise statistics, identify top performers, and detect subjects with low average performance.
+
+Objectives
+- Store marks as a nested list.
+- Calculate each student's total and average.
+- Calculate subject averages and identify the highest total.
+
+Assumptions
+- Each row represents one student and each column represents one subject.
+- Marks are out of 100.
+- A subject average below 50 is considered low.
+
+Algorithm
+1. Create a nested list of marks and a list of student names.
+2. Calculate each row total and average.
+3. Calculate each subject's average by summing the same column.
+4. Find the student with the highest total and report low-average subjects.
+
+Flowchart
+START -> Prepare input data -> Process using loops/conditions -> Check rules and calculate -> Display results -> END
+
+Pseudocode
+INPUT names and marks matrix
+FOR each student row: calculate total and average
+FOR each subject column: calculate average
+Find index of highest student total
+PRINT student totals, subject averages, top student, and low-average subjects
+
+Python Source Code
+# Question 42: Student Marks Matrix Analysis
+names = ["Asha", "Bala", "Charan"]
+subjects = ["Python", "Maths", "Physics"]
+marks = [
+    [85, 78, 91],
+    [60, 55, 58],
+    [42, 48, 45]
+]
+totals = []
+for i in range(len(marks)):
+    total = sum(marks[i])
+    average = total / len(subjects)
+    totals.append(total)
+    print(names[i], "total =", total, "average =", round(average, 2))
+print("\nSubject averages:")
+for j in range(len(subjects)):
+    total = 0
+    for i in range(len(marks)):
+        total += marks[i][j]
+    average = total / len(marks)
+    print(subjects[j], "=", round(average, 2))
+    if average < 50:
+        print("Low average subject:", subjects[j])
+top_index = totals.index(max(totals))
+print("\nTop performer:", names[top_index])
+
+
+
+Question 48: Tuple-Based Employee Shift Conflict Detection
+
+
+Problem Statement
+Represent employee shifts as tuples, compare time intervals, detect overlapping assignments, and identify employees with conflicting schedules.
+
+Objectives
+- Store employee shift details in tuples.
+- Compare shifts using interval conditions.
+- Report employees assigned overlapping shifts.
+
+Assumptions
+- Each shift is (employee, day, start_hour, end_hour).
+- Times are integer hours on the same day.
+- Only shifts for the same employee and day are checked for conflicts.
+
+Algorithm
+1. Store shifts in a list of tuples.
+2. Compare every pair of shifts.
+3. Check whether employee and day match and intervals overlap.
+4. Print conflicts or report no conflicts.
+
+Flowchart
+START -> Prepare input data -> Process using loops/conditions -> Check rules and calculate -> Display results -> END
+
+Pseudocode
+INPUT shift tuples
+found = False
+FOR each pair of shifts
+    IF employee and day match AND start1 < end2 AND start2 < end1
+        PRINT conflict
+        found = True
+IF not found: PRINT no conflicts
+
+Python Source Code
+# Question 48: Tuple-Based Employee Shift Conflict Detection
+shifts = [
+    ("Ravi", "Mon", 9, 13),
+    ("Ravi", "Mon", 12, 16),
+    ("Meena", "Mon", 9, 12),
+    ("Ravi", "Tue", 10, 12)
+]
+found = False
+for i in range(len(shifts)):
+    employee1, day1, start1, end1 = shifts[i]
+    for j in range(i + 1, len(shifts)):
+        employee2, day2, start2, end2 = shifts[j]
+        if (employee1 == employee2 and day1 == day2
+                and start1 < end2 and start2 < end1):
+            print("Shift conflict:", employee1, day1,
+                  str(start1) + "-" + str(end1), "and",
+                  str(start2) + "-" + str(end2))
+            found = True
+if not found:
+    print("No shift conflicts.")
+
+
+
+Question 55: Tuple-Based Transaction Audit
+
+
+Problem Statement
+Process transaction tuples containing identifiers, amounts, and transaction types; detect duplicate identifiers, invalid amounts, and suspicious sequences.
+
+Objectives
+- Validate transaction records.
+- Find duplicate identifiers and non-positive amounts.
+- Flag consecutive withdrawals above a set threshold.
+
+Assumptions
+- Each tuple is (ID, amount, type).
+- Valid amounts must be greater than zero.
+- A withdrawal above Rs. 5000 is flagged for review; this is a demonstration rule.
+
+Algorithm
+1. Loop through transaction tuples and validate amounts.
+2. Count each identifier and flag duplicates.
+3. Flag withdrawals greater than the threshold.
+4. Print all audit findings.
+
+Flowchart
+START -> Prepare input data -> Process using loops/conditions -> Check rules and calculate -> Display results -> END
+
+Pseudocode
+INPUT transaction tuples
+FOR each transaction
+    IF amount <= 0: print invalid amount
+    count matching IDs
+    IF count > 1: print duplicate ID
+    IF type is Withdrawal AND amount > threshold: print suspicious withdrawal
+
+Python Source Code
+# Question 55: Tuple-Based Transaction Audit
+transactions = [
+    ("A01", 1000, "Deposit"),
+    ("A02", 6500, "Withdrawal"),
+    ("A03", -200, "Deposit"),
+    ("A01", 1000, "Deposit")
+]
+threshold = 5000
+for transaction in transactions:
+    tid, amount, kind = transaction
+    if amount <= 0:
+        print(tid, ": invalid amount")
+    count = 0
+    for item in transactions:
+        if item[0] == tid:
+            count += 1
+    if count > 1 and transaction == transactions[0]:
+        print(tid, ": duplicate transaction ID")
+    if kind == "Withdrawal" and amount > threshold:
+        print(tid, ": suspicious large withdrawal")
+
+
+
+Question 61: Nested List Examination Seating Validation
+
+
+Problem Statement
+Validate a complete seating matrix for duplicate roll numbers, reserved positions, empty seats, and invalid student allocations.
+
+Objectives
+- Represent seating using a nested list.
+- Detect duplicate roll numbers.
+- Count empty seats and check reserved-seat rules.
+
+Assumptions
+- The value 'R' means a reserved seat, '-' means an empty seat, and other strings are roll numbers.
+- The reserved seat at row 1, column 2 must contain 'R'.
+- All roll numbers should be unique.
+
+Algorithm
+1. Store the seating arrangement as a nested list.
+2. Flatten the seat values into a list while ignoring reserved and empty markers.
+3. Find duplicate roll numbers by comparing values.
+4. Count empty seats and check whether the required reserved position is marked correctly.
+
+Flowchart
+START -> Prepare input data -> Process using loops/conditions -> Check rules and calculate -> Display results -> END
+
+Pseudocode
+INPUT seating matrix
+rolls = empty list; empty_count = 0
+FOR each seat
+    IF seat == '-': empty_count += 1
+    ELSE IF seat is not 'R': append seat to rolls
+FOR each roll number: count occurrences; report duplicates
+Check reserved position
+PRINT empty seats and validation results
+
+Python Source Code
+# Question 61: Nested List Examination Seating Validation
+seats = [
+    ["101", "102", "R"],
+    ["103", "101", "-"],
+    ["104", "-", "105"]
+]
+reserved_row = 0
+reserved_col = 2
+rolls = []
+empty_count = 0
+for row in seats:
+    for seat in row:
+        if seat == "-":
+            empty_count += 1
+        elif seat != "R":
+            rolls.append(seat)
+duplicates = []
+for roll in rolls:
+    if rolls.count(roll) > 1 and roll not in duplicates:
+        duplicates.append(roll)
+if seats[reserved_row][reserved_col] == "R":
+    print("Reserved seat is correct.")
+else:
+    print("Reserved seat error.")
+if duplicates:
+    print("Duplicate roll numbers:", duplicates)
+else:
+    print("No duplicate roll numbers.")
+print("Empty seats:", empty_count)
+
+
+
+Question 66: Student Academic Risk Classification
+
+
+Problem Statement
+Combine lists of marks, attendance, and laboratory scores to classify students into risk categories, identify multiple simultaneous risk factors, and generate a summary.
+
+Objectives
+- Evaluate multiple academic indicators.
+- Classify students into risk categories.
+- Explain each risk factor in the report.
+
+Assumptions
+- A student is at risk if average marks are below 50, attendance below 75%, or lab score below 50.
+- A student with no risk factors is classified as Low Risk.
+- A student with two or more risk factors is High Risk; otherwise Medium Risk.
+
+Algorithm
+1. Store names, marks, attendance, and lab scores in matching lists.
+2. Calculate each student's average marks.
+3. Count the number of risk factors.
+4. Classify the student based on the number of factors and print the reasons.
+
+Flowchart
+START -> Prepare input data -> Process using loops/conditions -> Check rules and calculate -> Display results -> END
+
+Pseudocode
+FOR each student
+    average = sum(marks) / number of subjects
+    risks = empty list
+    IF average < 50: add low marks
+    IF attendance < 75: add low attendance
+    IF lab < 50: add low lab score
+    IF number of risks >= 2: High Risk
+    ELSE IF number of risks == 1: Medium Risk
+    ELSE: Low Risk
+    PRINT student, category, reasons
+
+Python Source Code
+# Question 66: Student Academic Risk Classification
+names = ["Anu", "Bharat", "Chandu"]
+marks = [[70, 65, 72], [45, 48, 42], [80, 75, 78]]
+attendance = [88, 68, 82]
+lab_scores = [76, 42, 65]
+for i in range(len(names)):
+    average = sum(marks[i]) / len(marks[i])
+    risks = []
+    if average < 50:
+        risks.append("low marks")
+    if attendance[i] < 75:
+        risks.append("low attendance")
+    if lab_scores[i] < 50:
+        risks.append("low lab score")
+    if len(risks) >= 2:
+        category = "High Risk"
+    elif len(risks) == 1:
+        category = "Medium Risk"
+    else:
+        category = "Low Risk"
+    print(names[i], "-", category, "|", "Average:", round(average, 1))
+    if risks:
+        print("Reasons:", ", ".join(risks))
+
+
+
+Question 75: Integrated Student Record Consistency Checker
+
+Problem Statement
+Validate student identifiers, names, marks, attendance, and course records stored in lists and tuples; detect duplicates, missing values, and inconsistent academic records.
+
+Objectives
+- Check student records for missing or invalid values.
+- Detect duplicate student identifiers.
+- Report records that need correction.
+
+Assumptions
+- Each record is a tuple (roll_no, name, marks, attendance, course).
+- Roll number and name must not be empty.
+- Marks must be between 0 and 100; attendance must be between 0 and 100.
+
+Algorithm
+1. Store student records as tuples in a list.
+2. For each record, check required fields and numeric ranges.
+3. Count roll numbers to find duplicates.
+4. Print each record's errors or report that it is valid.
+
+Flowchart
+START -> Prepare input data -> Process using loops/conditions -> Check rules and calculate -> Display results -> END
+
+Pseudocode
+INPUT student record tuples
+FOR each record
+    errors = empty list
+    IF roll or name is empty: add missing field error
+    IF marks outside 0..100: add marks error
+    IF attendance outside 0..100: add attendance error
+    IF roll occurs more than once: add duplicate roll error
+    PRINT record and errors or Valid
+
+Python Source Code
+# Question 75: Integrated Student Record Consistency Checker
+records = [
+    ("101", "Asha", 86, 92, "Python"),
+    ("102", "Bala", 105, 78, "Maths"),
+    ("101", "Charan", 65, 110, "Python"),
+    ("", "Divya", 74, 80, "Physics")
+]
+for record in records:
+    roll, name, marks, attendance, course = record
+    errors = []
+    if roll == "":
+        errors.append("missing roll number")
+    if name == "":
+        errors.append("missing name")
+    if marks < 0 or marks > 100:
+        errors.append("marks out of range")
+    if attendance < 0 or attendance > 100:
+        errors.append("attendance out of range")
+    count = 0
+    for item in records:
+        if item[0] == roll and roll != "":
+            count += 1
+    if count > 1:
+        errors.append("duplicate roll number")
+    if errors:
+        print(name if name else "[no name]", ":", ", ".join(errors))
+    else:
+        print(name, ": Valid record")
+
+
+
+Question 87: Examination Question Difficulty and Performance Analysis
+
+Problem Statement
+Compare student answer strings against an answer key, calculate question-wise success rates, identify the most frequently missed questions, and classify question performance.
+
+Objectives
+- Compare answers with an answer key.
+- Calculate correct answers for each question.
+- Find the most frequently missed question.
+
+Assumptions
+- Each answer string contains one character per question.
+- A dash '-' represents an unanswered question.
+- Answers are compared without case sensitivity.
+- A question with fewer than 50% correct responses is classified as Difficult.
+
+Algorithm
+1. Store the answer key and student answer strings.
+2. For each question position, count correct answers across students.
+3. Calculate success percentage for each question.
+4. Identify the question with the lowest success rate and classify questions.
+
+Flowchart
+START -> Prepare input data -> Process using loops/conditions -> Check rules and calculate -> Display results -> END
+
+Pseudocode
+INPUT answer key and student answer strings
+FOR each question position
+    correct = 0
+    FOR each student answer
+        IF answer matches key: correct += 1
+    percentage = correct / number of students * 100
+    IF percentage < 50: classify Difficult
+    PRINT question and percentage
+Find question with minimum correct count
+
+Python Source Code
+# Question 87: Examination Question Difficulty and Performance Analysis
+answer_key = "ABCA"
+answers = ["ABCA", "ABBA", "CBCA", "A-CA"]
+student_count = len(answers)
+correct_counts = []
+for q in range(len(answer_key)):
+    correct = 0
+    for answer in answers:
+        if q < len(answer) and answer[q].upper() == answer_key[q]:
+            correct += 1
+    correct_counts.append(correct)
+    percentage = correct / student_count * 100
+    difficulty = "Difficult" if percentage < 50 else "Acceptable"
+    print("Question", q + 1, "- correct:", correct,
+          "success:", round(percentage, 1), "% -", difficulty)
+hardest_index = correct_counts.index(min(correct_counts))
+print("Most frequently missed question:", hardest_index + 1)
+
