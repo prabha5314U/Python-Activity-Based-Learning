@@ -22,7 +22,3 @@ This repository contains the Python programs developed for the ten selected case
 
 Each program demonstrates a practical problem-solving approach using Python. The programs cover areas such as timetable checking, transaction validation, text encoding, student marks analysis, employee shift checking, seating validation, academic risk classification, student record validation, and question difficulty analysis.
 
- Author
-
-R. Kalyan Naga Prabhas  
-Roll No: 26001007
